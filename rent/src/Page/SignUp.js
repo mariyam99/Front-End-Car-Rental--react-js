@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-import { Button } from "react-bootstrap";
+import Navbar from "../Component/Navbar";
  
 
 class SignUp extends React.Component {
@@ -27,11 +27,6 @@ constructor(props){
     isBlacklisted:false,
     userId: this.props.id,
     errors: {},
-/*    loggedInUser: null,
-    selectedFiles: null,
-    currentFile: null,
-    message: ""  
-*/
     
   };
 }
@@ -129,6 +124,7 @@ saveAndContinue = (e) => {
     nic:nic,
     isBlacklisted:false,
     licenseNo: licenseNo,
+    role:'CUSTOMER'
   };
 
   axios.post('http://localhost:8080/signup',user).then((response)=>{
@@ -172,18 +168,12 @@ saveAndContinue = (e) => {
       licenseNo,
     };
 
-    
-    // if (loggedInUser && loggedInUser.role === "ADMIN" && redirect) {
-    //   return <Redirect to="/admin/users" />;
-    // }
-
-    
-    // if (redirect) {
-    //   return <Redirect to="/" />;
-    // }
 
 
     return (
+      <div>
+      <Navbar />
+
       <div className="container register">
         <div className="row">
           <div className="col-md-3 register-left">
@@ -384,6 +374,7 @@ saveAndContinue = (e) => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     );
   }

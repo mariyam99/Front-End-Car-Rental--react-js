@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import s1 from "../images/s1.gif";
 import "./Home.css";
-import {
-  Card,CardDeck, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button,Container,Col
-} from 'reactstrap';
+import Navbar from "../Component/Navbar";
 
 class Home extends Component {
   render() {
     return (
       <div>
+              <Navbar />
         {/*carosel */}
         <div className="carousel-inner">
           <div className="carousel-item active">

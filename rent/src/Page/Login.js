@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./SignUp.css";
 import { Link } from "react-router-dom";
-import e from "cors";
 import axios from "axios";
+import Navbar from "../Component/Navbar";
+
 
 
 class Login extends React.Component {
@@ -15,6 +16,14 @@ class Login extends React.Component {
   };
 }
 
+passwordVisibile() {
+  var x = document.getElementById("inPassword");
+  if (x.type === "password") {
+      x.type = "text";
+  } else {
+      x.type = "password";
+  }
+}
 
  
 handlePasswordChange = (e) => {
@@ -43,40 +52,67 @@ doLogin = (e) =>
   }
   else{
     this.setState({errormessage:false});
-  }
+  
 
   let {
     username,
-    password,
-    user
+    password
   }=this.state
 
-  let object={
-    username: this.state.username,
-    password: this.state.password
+  let user={
+    username: username,
+    password: password
   };
 
-  axios.post('http://localhost:8080/authenticate',object,username).then((response) =>
-  {
-   if(response.data === "SUCCESS")
-   {
-     axios.post('http://localhost:8080/signup/'+ {username}).then(response =>
-     {
-       sessionStorage.setItem("loggedInUser",JSON.stringify(response.data));
-       this.setState({user:response.data});
-       let loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-       window.location= '/About'
-     });
+  axios.post('http://localhost:8080/findusername',user).then((usernameResponse) =>{
+    if(usernameResponse.data !== "NON-EXISTS")
+    {
+      axios.post('http://localhost:8080/authenticate',user).then(response =>
+      {
+        if(response !== 'false')
+        {
+          try{
+          localStorage.removeItem("token")
+          localStorage.setItem("token", response.data.jwt);
+          
+          axios.post('http://localhost:8080/checkprofile',user).then(response =>{
+          sessionStorage.setItem("login",JSON.stringify(response.data));
+           
+          this.setState({user:response.data});
+           let login=JSON.parse(sessionStorage.getItem("login"));
+           if(login.role === "ADMIN")
+           {
+             window.location ='/AdminHome';
+           }
+           else if(login.role==="CUSTOMER")
+           {
+             window.location = '/CustomerHome';
+           }
+          });
+          }
+          catch(er){
+              alert("wrong");
 
-   }
-   else 
-   {
-    this.setState({errormessage:true});
+          }
+        }
+      else{
+        alert("wrong password")
+      }
 
-   }
+
+      })
+    
+     
+    
+    }
+     else if(usernameResponse.data === "NON-EXISTS")
+    {
+      alert('Username not found');
+    }
   });
-
-}
+  }
+  
+};
 
 handleAlert = () => {
   this.setState({ errorMessage: false });
@@ -86,6 +122,9 @@ handleAlert = () => {
   
   render() {
     return (
+      <div>
+      <Navbar />
+
       <div className="container register">
         <div className="row">
           <div className="col-md-3 register-left">
@@ -124,6 +163,7 @@ handleAlert = () => {
                         type="password"
                         className="form-control"
                         placeholder="Password"
+                        id="inPassword"
                         onChange={this.handlePasswordChange}
 
                       />
@@ -145,6 +185,7 @@ handleAlert = () => {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     );

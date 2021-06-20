@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import "./CustomerHome.css";
 import AdminNav from "../Component/AdminNav";
 
-
-class AdminHome extends Component {
+class AddVehicle extends Component {
+    state = {  }
     render() { 
-        <AdminNav />
+        return (  );
     }
 }
  
-export default AdminHome;
+export default AddVehicle;

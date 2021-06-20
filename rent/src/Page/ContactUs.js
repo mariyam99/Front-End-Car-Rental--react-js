@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import "./ContactUs.css";
+import Navbar from "../Component/Navbar";
+
 
 class ContactUs extends Component {
   render() {
     return (
       <div>
-        <div class="container">
+        <Navbar />
+         <div class="container">
           {" "}
           <div class=" text-center mt-5 ">
             <h1>Have Questions?/Make your Complain!</h1>
-          </div>
-          <div class="row ">
+            </div>
+            <div class="row ">
             <div class="col-lg-7 mx-auto">
               <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">

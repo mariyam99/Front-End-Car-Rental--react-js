@@ -6,11 +6,15 @@ import a3 from "../images/blacklist.jpg";
 import a4 from "../images/time.jpg";
 import a5 from "../images/repeat.jpg";
 import a6 from "../images/no.png";
+import Navbar from "../Component/Navbar";
+
+
 
 class About extends Component {
   render() {
     return (
       <div>
+        <Navbar />
         <div class="container mt-5">
           <div class="row">
             <div class="col-md-4">
